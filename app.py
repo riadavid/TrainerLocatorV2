@@ -8,6 +8,8 @@ from datetime import datetime
 import folium
 from streamlit_folium import st_folium
 import base64
+import json
+
 
 # ---------- Firebase Setup ----------
 if not firebase_admin._apps:
