@@ -11,7 +11,8 @@ import base64
 
 # ---------- Firebase Setup ----------
 if not firebase_admin._apps:
-    cred = credentials.Certificate(st.secrets["firebase_service_account"])
+    firebase_cred_dict = json.loads(st.secrets["firebase_service_account"])
+    cred = credentials.Certificate(firebase_cred_dict)
     firebase_admin.initialize_app(cred, {
         'databaseURL': 'https://trainerlocatorv2-default-rtdb.asia-southeast1.firebasedatabase.app/'
     })
