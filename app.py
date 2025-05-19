@@ -9,17 +9,20 @@ import folium
 from streamlit_folium import st_folium
 import base64
 import json
-
+import os
 
 # ---------- Firebase Setup ----------
-if not firebase_admin._apps:
-    firebase_creds = st.secrets["firebase_service_account"]
-
-    firebase_creds["private_key"] = firebase_creds["private_key"].replace("\\n", "\n")
-    cred = credentials.Certificate(firebase_creds)
-    firebase_admin.initialize_app(cred, {
-        'databaseURL': 'https://trainerlocatorv2-default-rtdb.asia-southeast1.firebasedatabase.app/'
-    })
+try:
+    if not firebase_admin._apps:
+        firebase_creds = dict(st.secrets["firebase_service_account"])
+        firebase_creds["private_key"] = firebase_creds["private_key"].replace("\\n", "\n")
+        cred = credentials.Certificate(firebase_creds)
+        firebase_admin.initialize_app(cred, {
+            'databaseURL': 'https://trainerlocatorv2-default-rtdb.asia-southeast1.firebasedatabase.app/'
+        })
+except Exception as e:
+    st.error(f"Firebase initialization failed: {e}")
+    st.stop()
 
 # ---------- Reverse Geocoding Function ----------
 def get_state(lat, lon):
