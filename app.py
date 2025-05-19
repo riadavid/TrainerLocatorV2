@@ -13,12 +13,12 @@ import json
 
 # ---------- Firebase Setup ----------
 if not firebase_admin._apps:
-    firebase_cred_dict = st.secrets["firebase_service_account"]  # Already a dict
-    cred = credentials.Certificate(firebase_cred_dict)
+    
+    cred = credentials.Certificate(st.secrets["firebase_service_account"])
     firebase_admin.initialize_app(cred, {
         'databaseURL': 'https://trainerlocatorv2-default-rtdb.asia-southeast1.firebasedatabase.app/'
     })
-    
+
 # ---------- Reverse Geocoding Function ----------
 def get_state(lat, lon):
     try:
